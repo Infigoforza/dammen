@@ -1,5 +1,6 @@
 package practicum2_1;
 
+import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class DamspelApp extends Application implements
 		EventHandler<ActionEvent> {
@@ -24,11 +26,12 @@ public class DamspelApp extends Application implements
 	private Label stenenZ = new Label("Stenen Z: ");
 	private Label stenenW = new Label("Stenen W: ");
 	private Damspel spel = new Damspel();
+	private GridPane bord = new GridPane();
 
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();
-		GridPane bord = new GridPane();
+		
 		VBox links = new VBox();
 		links.getChildren().addAll(reset, roteren, speler, stenenZ, stenenW);
 		links.setSpacing(3);
@@ -41,8 +44,12 @@ public class DamspelApp extends Application implements
 		bord.setPrefSize(300, 200);
 		bord.setAlignment(Pos.BOTTOM_RIGHT);
 		
+		roteren.setOnAction(this);
 		
-		reset.setOnAction(this);
+		
+		
+		
+	
 		reset.setPrefSize(120, 20);
 		reset.getStyleClass().add("reset");
 
@@ -50,6 +57,8 @@ public class DamspelApp extends Application implements
 		root.setAlignment(melding, Pos.TOP_RIGHT);
 		root.setPadding(new Insets(5, 5, 5, 5));
 		root.setTop(melding);
+		
+		roteren.setOnAction(this);
 
 		int k = 0;
 		for (int i = 0; i < buttonbord.length; i++) {
@@ -80,7 +89,22 @@ public class DamspelApp extends Application implements
 	}
 
 	public void handle(ActionEvent event) {
-		System.out.println("Hello World!");
+		
+		
+		if(event.getSource() == roteren){
+			
+			
+			RotateTransition timer = new RotateTransition(Duration.millis(3000),
+					bord);
+			timer.setByAngle(180);
+			timer.setCycleCount(1);
+			timer.setAutoReverse(false);
+			timer.play();
+					
+			
+			} 
+			
+	
 	}
 
 	public static void main(String[] args) {

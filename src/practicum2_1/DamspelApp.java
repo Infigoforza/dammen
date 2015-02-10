@@ -81,14 +81,6 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	}
 
 	public void handle(ActionEvent event) {
-		Button but = (Button) event.getSource();
-		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
-			but.getStyleClass().add("SPEELBAAR");
-			clicked = true;
-		} else {
-			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
-			clicked = false;
-		}
 		if (event.getSource() == roteren) {
 
 			RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
@@ -96,7 +88,15 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 			timer.setCycleCount(1);
 			timer.setAutoReverse(false);
 			timer.play();
-
+		} else {
+			Button but = (Button) event.getSource();
+			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
+				but.getStyleClass().add("SPEELBAAR");
+				clicked = true;
+			} else {
+				but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+				clicked = false;
+			}
 		}
 	}
 

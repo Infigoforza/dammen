@@ -1,0 +1,46 @@
+
+.root{
+	
+}
+
+.melding{
+	-fx-text-fill: #FF0000;
+}
+
+.reset{
+		
+}
+
+.ZWART{	
+	-fx-background-image: url("ZwarteSteen.png");
+	-fx-background-size:40.0px;	
+	-fx-background-color: black;
+}
+
+.WIT{
+	-fx-background-image: url("WitteSteen.png");
+	-fx-background-size:40.0px;
+	-fx-background-color: black;
+}
+.LEEG{		
+	-fx-background-color: black;
+	
+}
+.ZWARTDAM{
+	-fx-background-image: url("ZwarteDam.png");
+	-fx-background-size:40.0px;
+	-fx-background-color: black;
+	
+}
+
+.WITDAM{
+	-fx-background-image: url("WitteDam.png");
+	-fx-background-size:40.0px;
+	-fx-background-color: black;
+}
+
+.NIETSPEELBAAR{
+	-fx-background-color: white;
+}
+
+

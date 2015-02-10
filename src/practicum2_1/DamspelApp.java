@@ -1,5 +1,7 @@
 package practicum2_1;
 
+import javafx.util.Duration;
+import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,8 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class DamspelApp extends Application implements
-		EventHandler<ActionEvent> {
+public class DamspelApp extends Application implements EventHandler<ActionEvent> {
 	private Button[][] buttonbord = new Button[10][10];
 	private Button reset = new Button("Reset");
 	private Label melding = new Label("Meldingen komen hier!");
@@ -24,12 +25,12 @@ public class DamspelApp extends Application implements
 	private Label stenenZ = new Label("Stenen Z: ");
 	private Label stenenW = new Label("Stenen W: ");
 	private Damspel spel = new Damspel();
+	private GridPane bord = new GridPane();
 	private boolean clicked = false;
 
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();
-		GridPane bord = new GridPane();
 		VBox links = new VBox();
 		links.getChildren().addAll(reset, roteren, speler, stenenZ, stenenW);
 		links.setSpacing(3);
@@ -41,8 +42,7 @@ public class DamspelApp extends Application implements
 
 		bord.setPrefSize(300, 200);
 		bord.setAlignment(Pos.BOTTOM_RIGHT);
-		
-		
+
 		reset.setOnAction(this);
 		reset.setPrefSize(120, 20);
 		reset.getStyleClass().add("reset");
@@ -81,14 +81,22 @@ public class DamspelApp extends Application implements
 	}
 
 	public void handle(ActionEvent event) {
-		Button but = (Button)event.getSource();
-		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))){
+		Button but = (Button) event.getSource();
+		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
 			but.getStyleClass().add("SPEELBAAR");
 			clicked = true;
-		}
-		else{
+		} else {
 			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
 			clicked = false;
+		}
+		if (event.getSource() == roteren) {
+
+			RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
+			timer.setByAngle(180);
+			timer.setCycleCount(1);
+			timer.setAutoReverse(false);
+			timer.play();
+
 		}
 	}
 

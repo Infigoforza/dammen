@@ -24,6 +24,7 @@ public class DamspelApp extends Application implements
 	private Label stenenZ = new Label("Stenen Z: ");
 	private Label stenenW = new Label("Stenen W: ");
 	private Damspel spel = new Damspel();
+	private boolean clicked = false;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -80,7 +81,15 @@ public class DamspelApp extends Application implements
 	}
 
 	public void handle(ActionEvent event) {
-		System.out.println("Hello World!");
+		Button but = (Button)event.getSource();
+		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))){
+			but.getStyleClass().add("SPEELBAAR");
+			clicked = true;
+		}
+		else{
+			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+			clicked = false;
+		}
 	}
 
 	public static void main(String[] args) {

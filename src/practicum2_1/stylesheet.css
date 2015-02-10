@@ -42,5 +42,8 @@
 .NIETSPEELBAAR{
 	-fx-background-color: white;
 }
-
+.SPEELBAAR{
+	-fx-border-color: red;
+    -fx-border-width: 3;
+}
 

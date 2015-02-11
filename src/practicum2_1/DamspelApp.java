@@ -28,7 +28,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	private GridPane bord = new GridPane();
 	private boolean clicked = false;
 	private Button prevButton;
-
+	// Change for testing git setup
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();

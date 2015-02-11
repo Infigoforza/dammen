@@ -27,14 +27,13 @@
 	
 }
 .ZWARTDAM{
-	-fx-background-image: url("ZwarteDam.png");
+	
 	-fx-background-size:40.0px;
 	-fx-background-color: black;
 	
 }
 
 .WITDAM{
-	-fx-background-image: url("WitteDam.png");
 	-fx-background-size:40.0px;
 	-fx-background-color: black;
 }

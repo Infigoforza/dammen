@@ -92,19 +92,20 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 			timer.play();
 		} else {
 			Button but = (Button) event.getSource();
-		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
-			but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
-			prevButton = but;
-			clicked = true;
-			upMel();
-		} else {
-			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
-			spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()));
-			update();
-			clicked = false;
-			upMel();
+			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
+				but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
+				prevButton = but;
+				clicked = true;
+				upMel();
+			} else {
+				but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+				spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()));
+				update();
+				clicked = false;
+				upMel();
+			}
 		}
-		}
+	}
 
 	public boolean upMel() {
 		melding.setText(spel.getMelding());

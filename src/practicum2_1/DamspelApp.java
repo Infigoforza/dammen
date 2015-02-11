@@ -27,6 +27,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	private Damspel spel = new Damspel();
 	private GridPane bord = new GridPane();
 	private boolean clicked = false;
+	private Button prevButton;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -59,6 +60,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 				buttonbord[i][j].setOnAction(this);
 				buttonbord[i][j].setPrefSize(40, 40);
 				buttonbord[i][j].setId(String.valueOf(k));
+				buttonbord[i][j].setText(String.valueOf(k));
 				buttonbord[i][j].getStyleClass().add(spel.getVeldStatus(k));
 				k++;
 
@@ -83,20 +85,38 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	public void handle(ActionEvent event) {
 		Button but = (Button) event.getSource();
 		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
-			but.getStyleClass().add("SPEELBAAR");
+			but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
+			prevButton = but;
 			clicked = true;
+			upMel();
 		} else {
 			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+			spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()));
+			update();
 			clicked = false;
+			upMel();
 		}
 		if (event.getSource() == roteren) {
-
 			RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
 			timer.setByAngle(180);
 			timer.setCycleCount(1);
 			timer.setAutoReverse(false);
 			timer.play();
+		}
+	}
 
+	public boolean upMel() {
+		melding.setText(spel.getMelding());
+		return false;
+	}
+
+	public void update() {
+		int k = 0;
+		for (int i = 0; i < buttonbord.length; i++) {
+			for (int j = 0; j < buttonbord.length; j++) {
+				buttonbord[i][j].getStyleClass().add(spel.getVeldStatus(k));
+				k++;
+			}
 		}
 	}
 

@@ -28,7 +28,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	private GridPane bord = new GridPane();
 	private boolean clicked = false;
 	private Button prevButton;
-	// Change for testing git setup
+
 	@Override
 	public void start(Stage primaryStage) {
 		BorderPane root = new BorderPane();
@@ -83,7 +83,15 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	}
 
 	public void handle(ActionEvent event) {
-		Button but = (Button) event.getSource();
+		if (event.getSource() == roteren) {
+
+			RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
+			timer.setByAngle(180);
+			timer.setCycleCount(1);
+			timer.setAutoReverse(false);
+			timer.play();
+		} else {
+			Button but = (Button) event.getSource();
 		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
 			but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
 			prevButton = but;
@@ -96,14 +104,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 			clicked = false;
 			upMel();
 		}
-		if (event.getSource() == roteren) {
-			RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
-			timer.setByAngle(180);
-			timer.setCycleCount(1);
-			timer.setAutoReverse(false);
-			timer.play();
 		}
-	}
 
 	public boolean upMel() {
 		melding.setText(spel.getMelding());

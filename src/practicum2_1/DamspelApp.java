@@ -35,6 +35,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 
 	@Override
 	public void start(Stage primaryStage) {
+		roteren.setSelected(true);
 		BorderPane root = new BorderPane();
 		VBox links = new VBox();
 		links.getChildren().addAll(reset, roteren, speler, stenenZ, stenenW);
@@ -86,28 +87,23 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	}
 
 	public void handle(ActionEvent event) {
-		if (event.getSource() == roteren) {
-
-			RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
-			timer.setByAngle(180);
-			timer.setCycleCount(1);
-			timer.setAutoReverse(false);
-			timer.play();
+		Button but = (Button) event.getSource();
+		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
+			but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
+			prevButton = but;
+			clicked = true;
+			upMel();
 		} else {
-			Button but = (Button) event.getSource();
-			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
-				but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
-				prevButton = but;
-				clicked = true;
-				upMel();
-			} else {
-				prevButton.setStyle("");
-				but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
-				spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()));
-				update();
-				clicked = false;
-				upMel();
+			prevButton.setStyle("");
+			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+			if (spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()))) {
+				if (roteren.isSelected()) {
+					roteren();
+				}
 			}
+			update();
+			clicked = false;
+			upMel();
 		}
 	}
 
@@ -125,6 +121,14 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 				k++;
 			}
 		}
+	}
+
+	public void roteren() {
+		RotateTransition timer = new RotateTransition(Duration.millis(3000), bord);
+		timer.setByAngle(180);
+		timer.setCycleCount(1);
+		timer.setAutoReverse(false);
+		timer.play();
 	}
 
 	public static void main(String[] args) {

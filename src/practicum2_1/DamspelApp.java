@@ -16,6 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * @author martijn
+ *
+ */
 public class DamspelApp extends Application implements EventHandler<ActionEvent> {
 	private Button[][] buttonbord = new Button[10][10];
 	private Button reset = new Button("Reset");
@@ -94,7 +98,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 			Button but = (Button) event.getSource();
 			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
 				but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
-				prevButton = but;
+				//prevButton.setStyle("");
 				clicked = true;
 				upMel();
 			} else {

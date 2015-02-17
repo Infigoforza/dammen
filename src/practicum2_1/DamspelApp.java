@@ -87,23 +87,28 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	}
 
 	public void handle(ActionEvent event) {
-		Button but = (Button) event.getSource();
-		if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
-			but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
-			prevButton = but;
-			clicked = true;
-			upMel();
-		} else {
-			prevButton.setStyle("");
-			but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
-			if (spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()))) {
-				if (roteren.isSelected()) {
-					roteren();
-				}
-			}
+		if (event.getSource() == reset) {
+			spel.reset();
 			update();
-			clicked = false;
-			upMel();
+		} else {
+			Button but = (Button) event.getSource();
+			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
+				but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
+				prevButton = but;
+				clicked = true;
+				upMel();
+			} else {
+				prevButton.setStyle("");
+				but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+				if (spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()))) {
+					if (roteren.isSelected()) {
+						roteren();
+					}
+				}
+				update();
+				clicked = false;
+				upMel();
+			}
 		}
 	}
 

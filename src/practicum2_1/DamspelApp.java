@@ -16,6 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * @author martijn en iedereen op deze mooie wereld
+ *
+ */
 public class DamspelApp extends Application implements EventHandler<ActionEvent> {
 	private Button[][] buttonbord = new Button[10][10];
 	private Button reset = new Button("Reset");
@@ -27,6 +31,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 	private Damspel spel = new Damspel();
 	private GridPane bord = new GridPane();
 	private boolean clicked = false;
+	private Button prevButton;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -91,11 +96,33 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 		} else {
 			Button but = (Button) event.getSource();
 			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
-				but.getStyleClass().add("SPEELBAAR");
+				but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
+				prevButton = but;
 				clicked = true;
+				upMel();
 			} else {
+				prevButton.setStyle("");
 				but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
+				spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()));
+				update();
 				clicked = false;
+				upMel();
+			}
+		}
+	}
+
+	public boolean upMel() {
+		melding.setText(spel.getMelding());
+		return false;
+	}
+
+	public void update() {
+		int k = 0;
+		for (int i = 0; i < buttonbord.length; i++) {
+			for (int j = 0; j < buttonbord.length; j++) {
+				buttonbord[i][j].getStyleClass().removeAll("ZWART", "WIT", "LEEG", "ZWARTDAM", "WITDAM", "NIETSPEELBAAR", "SPEELBAAR");
+				buttonbord[i][j].getStyleClass().add(spel.getVeldStatus(k));
+				k++;
 			}
 		}
 	}

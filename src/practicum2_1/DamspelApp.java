@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * @author martijn
+ * @author martijn en iedereen op deze mooie wereld
  *
  */
 public class DamspelApp extends Application implements EventHandler<ActionEvent> {
@@ -64,7 +64,6 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 				buttonbord[i][j].setOnAction(this);
 				buttonbord[i][j].setPrefSize(40, 40);
 				buttonbord[i][j].setId(String.valueOf(k));
-				buttonbord[i][j].setText(String.valueOf(k));
 				buttonbord[i][j].getStyleClass().add(spel.getVeldStatus(k));
 				k++;
 
@@ -98,10 +97,11 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 			Button but = (Button) event.getSource();
 			if (!clicked && spel.isVeldSpeelbaar(Integer.valueOf(but.getId()))) {
 				but.setStyle("-fx-border-color: red; -fx-border-width: 3;");
-				//prevButton.setStyle("");
+				prevButton = but;
 				clicked = true;
 				upMel();
 			} else {
+				prevButton.setStyle("");
 				but.getStyleClass().add(spel.getVeldStatus(Integer.valueOf(but.getId())));
 				spel.doeZet(Integer.valueOf(prevButton.getId()), Integer.valueOf(but.getId()));
 				update();
@@ -120,6 +120,7 @@ public class DamspelApp extends Application implements EventHandler<ActionEvent>
 		int k = 0;
 		for (int i = 0; i < buttonbord.length; i++) {
 			for (int j = 0; j < buttonbord.length; j++) {
+				buttonbord[i][j].getStyleClass().removeAll("ZWART", "WIT", "LEEG", "ZWARTDAM", "WITDAM", "NIETSPEELBAAR", "SPEELBAAR");
 				buttonbord[i][j].getStyleClass().add(spel.getVeldStatus(k));
 				k++;
 			}
